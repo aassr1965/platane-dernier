@@ -28,17 +28,17 @@ export default function Header() {
                 height={60}
                 alt={`${APP_NAME} logo`}
               />
-              <div className='hidden md:block'>
+              <div className='hidden lg:block'>
                 {APP_NAME}
               </div>
             </Link>
           </div>
-          <div className='hidden md:block flex-1 max-w-xl'>
+          <div className='hidden lg:block flex-1 max-w-xl'>
             <Search />
           </div>
           <Menu />
         </div>
-        <div className='md:hidden block py-2'>
+        <div className='lg:hidden block py-2'>
           <Search />
         </div>
       </div>
@@ -53,11 +53,11 @@ export default function Header() {
             aria-expanded={isMobileSubMenuOpen}
             aria-controls="mobile-submenu-content"
           >
-            <span className="xl:hidden"> {/* Icon only for mobile toggle indication */}
+            <span className="lg:hidden"> {/* Icon only for mobile toggle indication */}
               {isMobileSubMenuOpen ? <XIcon /> : <MenuIcon />}
             </span>
-            <div className="xl:hidden">
-            <MenuIcon className="hidden xl:inline-flex" /> {/* Icon for desktop "All" button */}
+            <div className="lg:hidden">
+            <MenuIcon className="hidden lg:inline-flex" /> {/* Icon for desktop "All" button */}
               Menu
               </div>
           </Button>
@@ -78,7 +78,7 @@ export default function Header() {
 
         {/* Mobile: Dropdown menu items, shown when isMobileSubMenuOpen is true */}
         {isMobileSubMenuOpen && (
-          <div id="mobile-submenu-content" className='md:hidden px-3 pb-3 flex flex-col gap-1'> {/* Styling for dropdown list */}
+          <div id="mobile-submenu-content" className='lg:hidden px-3 pb-3 flex flex-col gap-1'> {/* Styling for dropdown list */}
             {data.headerMenus.map((menu) => (
               <Link
                 href={menu.href}
