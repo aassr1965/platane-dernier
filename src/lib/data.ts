@@ -1,4 +1,4 @@
-const data = {
+const datas = {
   headerMenus: [
     {
       name: "Today's Deal",
@@ -58,4 +58,4 @@ const data = {
   ],
 };
 
-export default data
+export default datas
