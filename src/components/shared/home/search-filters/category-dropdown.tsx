@@ -39,6 +39,17 @@ export const CategoryDropdown = ({
       ref={dropdownRef}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (category.subcategories) {
+            setIsOpen(!isOpen);
+          }
+        } else if (e.key === 'Escape' && isOpen) {
+          setIsOpen(false);
+        }
+      }}
+      tabIndex={0}
     >
       <div className="relative">
         <Button
