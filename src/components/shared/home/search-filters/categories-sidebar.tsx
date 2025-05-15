@@ -10,6 +10,7 @@ import { CustomCategory } from "@/app/(app)/(home)/types";
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { cn, getTextColorForBackground } from "@/lib/utils";
 
 interface Props {
   open: boolean;
@@ -34,7 +35,7 @@ export const CategoriesSidebar = ({
     setSelectedCategories(null)
     setParentCategories(null)
     onOpenChange(open)
-    
+
   }
 
   const handleCategoryClick = (category: CustomCategory) => {
@@ -54,24 +55,27 @@ export const CategoriesSidebar = ({
       handleOpenChange(false)
     }
   }
-  
-  const handleBackClick = () => { 
-    if (parentCategories) { 
+
+  const handleBackClick = () => {
+    if (parentCategories) {
       setParentCategories(null)
       setSelectedCategories(null)
     }
   }
-  const backgroundColor = selectedCategories?.color  || "white"
+  const backgroundColor = selectedCategories?.color || "white"
+  const textColorClass = backgroundColor === "white"
+    ? "text-gray-900"
+    : getTextColorForBackground(backgroundColor)
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
         side="left"
-        className="p-0 transition-none"
-        style={{ backgroundColor}}
+        className={cn("p-0 transition-none", textColorClass)}
+        style={{ backgroundColor }}
       >
-        <SheetHeader className="p-4 border-b">
-          <SheetTitle className="text-lg font-bold">
+        <SheetHeader className={cn("p-4 border-b", textColorClass)}>
+          <SheetTitle className={cn("text-lg font-bold", textColorClass)}>
             Catégories
           </SheetTitle>
         </SheetHeader>
@@ -79,9 +83,13 @@ export const CategoriesSidebar = ({
           {parentCategories && (
             <button
               onClick={handleBackClick}
-              className="w-full text-left p-4 hover:bg-black cursor-pointer hover:text-white flex items-center text-base font-medium"
+              className={cn(
+                "w-full text-left p-4 cursor-pointer flex items-center text-base font-medium",
+                textColorClass,
+                "hover:bg-black hover:text-white"
+              )}
             >
-              <ChevronLeftIcon className="size-4 mr-2" />
+              <ChevronLeftIcon className={cn("size-4 mr-2", textColorClass)} />
               Retour
             </button>
           )}
@@ -89,11 +97,15 @@ export const CategoriesSidebar = ({
             <button
               key={category.slug}
               onClick={() => handleCategoryClick(category)}
-              className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center justify-between text-base font-medium cursor-pointer"
+              className={cn(
+                "w-full text-left p-4 flex items-center justify-between text-base font-medium cursor-pointer",
+                textColorClass,
+                "hover:bg-black hover:text-white"
+              )}
             >
               {category.name}
               {category.subcategories && category.subcategories.length > 0 && (
-                <ChevronRightIcon className="size-4 ml-2 text-gray-500" />
+                <ChevronRightIcon className={cn("size-4 ml-2", textColorClass)} />
               )}
             </button>
           ))}
