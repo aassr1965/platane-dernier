@@ -1,16 +1,21 @@
 "use client"; // Required for useState and event handlers
 
 import { useState } from 'react';
-import { APP_NAME } from '@/lib/constants'
-import Image from 'next/image'
-import Link from 'next/link'
-import Menu from './menu'
-import { Button } from '@/components/ui/button'
-import { MenuIcon, XIcon } from 'lucide-react' // XIcon for close state
-import data from '@/lib/data'
-import Search from './search'
+import { APP_NAME } from '@/lib/constants';
+import Image from 'next/image';
+import Link from 'next/link';
+import Menu from './menu';
+import { Button } from '@/components/ui/button';
+import { MenuIcon, XIcon } from 'lucide-react';
+import headerLinkData from '@/lib/data'; // Renamed to avoid confusion
+import Search from './search';
+import { CustomCategory } from '@/app/(app)/(home)/types'; // Import CustomCategory
 
-export default function Header() {
+interface HeaderProps {
+  categoryData: CustomCategory[]; // Define prop for category data
+}
+
+export default function Header({ categoryData }: HeaderProps) { // Use the prop
   const [isMobileSubMenuOpen, setIsMobileSubMenuOpen] = useState(false);
 
   return (
@@ -34,12 +39,12 @@ export default function Header() {
             </Link>
           </div>
           <div className='hidden lg:block flex-1 max-w-xl'>
-            <Search />
+            <Search data={categoryData} /> {/* Pass categoryData */}
           </div>
           <Menu />
         </div>
         <div className='lg:hidden block py-2'>
-          <Search />
+          <Search data={categoryData} /> {/* Pass categoryData */}
         </div>
       </div>
 
@@ -53,18 +58,18 @@ export default function Header() {
             aria-expanded={isMobileSubMenuOpen}
             aria-controls="mobile-submenu-content"
           >
-            <span className="lg:hidden"> {/* Icon only for mobile toggle indication */}
+            {/* Mobile-specific icon (MenuIcon or XIcon) */}
+            <span className="lg:hidden">
               {isMobileSubMenuOpen ? <XIcon /> : <MenuIcon />}
             </span>
-            <div className="lg:hidden">
-            <MenuIcon className="hidden lg:inline-flex" /> {/* Icon for desktop "All" button */}
-              Menu
-              </div>
+            {/* Desktop-specific icon (MenuIcon) and text "Menu" */}
+            <MenuIcon className="hidden lg:inline-flex" />
+            <span className="ml-1">Menu</span>
           </Button>
           
           {/* Desktop: Menu items displayed inline, original styling preserved */}
           <div className='hidden lg:flex items-center flex-wrap gap-3 overflow-hidden max-h-[42px] ml-3'> {/* Added ml-3 for spacing */}
-            {data.headerMenus.map((menu) => (
+            {headerLinkData.headerMenus.map((menu) => (
               <Link
                 href={menu.href}
                 key={menu.href}
@@ -79,7 +84,7 @@ export default function Header() {
         {/* Mobile: Dropdown menu items, shown when isMobileSubMenuOpen is true */}
         {isMobileSubMenuOpen && (
           <div id="mobile-submenu-content" className='lg:hidden px-3 pb-3 flex flex-col gap-1'> {/* Styling for dropdown list */}
-            {data.headerMenus.map((menu) => (
+            {headerLinkData.headerMenus.map((menu) => (
               <Link
                 href={menu.href}
                 key={menu.href}

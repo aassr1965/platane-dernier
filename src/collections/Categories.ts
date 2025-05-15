@@ -33,7 +33,9 @@ export const Categories: CollectionConfig = {
       type: "join",
       collection: "categories",
       on: "parent",
-      hasMany: true
+      hasMany: true,
+      defaultLimit: 20,
+      maxDepth: 3,
     }
   ]
 }
