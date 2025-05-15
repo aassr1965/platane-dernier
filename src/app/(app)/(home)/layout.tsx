@@ -36,7 +36,7 @@ const HomeLayout = async ({
     }))
   }))
 
-  console.log("data", data)
+  
   return (
     <div className='flex flex-col min-h-screen'>
       <Header categoryData={formattedData} />

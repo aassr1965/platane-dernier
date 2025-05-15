@@ -38,7 +38,10 @@ export const CategoriesSidebar = ({
 
   }
 
-  const handleCategoryClick = (category: CustomCategory) => {
+  const handleCategoryClick = (e: React.MouseEvent, category: CustomCategory) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (category.subcategories && category.subcategories.length > 0) {
       setParentCategories(category.subcategories as CustomCategory[])
       setSelectedCategories(category)
@@ -82,7 +85,12 @@ export const CategoriesSidebar = ({
         <ScrollArea className="flex flex-col overflow-y-auto h-full pb-2">
           {parentCategories && (
             <button
-              onClick={handleBackClick}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleBackClick();
+              }}
               className={cn(
                 "w-full text-left p-4 cursor-pointer flex items-center text-base font-medium",
                 textColorClass,
@@ -95,8 +103,9 @@ export const CategoriesSidebar = ({
           )}
           {currentCategories.map((category) => (
             <button
+              type="button"
               key={category.slug}
-              onClick={() => handleCategoryClick(category)}
+              onClick={(e) => handleCategoryClick(e, category)}
               className={cn(
                 "w-full text-left p-4 flex items-center justify-between text-base font-medium cursor-pointer",
                 textColorClass,

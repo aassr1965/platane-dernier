@@ -39,7 +39,7 @@ export default function Search({ disabled, data }: Props) {
           <Select name='category'>
             <SelectTrigger
               className={cn(
-                'w-auto h-full bg-gray-100 text-black py-[19px]',
+                'w-auto h-full bg-gray-100 text-black py-[19.4px]',
                 'border border-gray-300 dark:border-gray-200',
                 'rounded-l-md rounded-r-none', // First item on desktop
                 'focus:ring-0 focus:ring-offset-0 focus-visible:ring-offset-0' // Shadcn focus style
@@ -84,16 +84,20 @@ export default function Search({ disabled, data }: Props) {
             )}
           >
             <SearchIcon className='w-6 h-6' />
-          </button>
-          {/* Mobile Filter Button: Visible on mobile (not LG), between Input and Search Submit */}
+          </button>          {/* Mobile Filter Button: Visible on mobile (not LG), between Input and Search Submit */}
           <Button
+            type="button"
             variant="elevated"
-            onClick={() => setIsSidebarOpen(true)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsSidebarOpen(true);
+            }}
             className={cn(
               'flex items-center justify-center bg-gray-100 text-black px-3 h-full',
-              'border border-gray-300 dark:border-gray-200 border-l-0', // Connects to Input's right border
+              'border border-gray-300 dark:border-gray-200 border-l-0',
               'lg:hidden',
-              'rounded-md bg-primary' // Middle item on mobile
+              'rounded-md bg-primary'
             )}
           >
             <ListFilterIcon className="h-5 w-5" />
